@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode, type ElementType } from "react";
 import heroMine from "@/assets/hero-mine.jpg";
+import logoMark from "@/assets/logo-mark.png";
 import heroCam04 from "@/assets/hero-cam04.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
@@ -268,10 +269,13 @@ function Navbar({ onCta }: { onCta: () => void }) {
     { label: "Recursos", href: "#recursos" },
   ];
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/95 backdrop-blur-md">
       <div className="container-opsia flex h-16 items-center justify-between text-white">
-        <a href="#top" className="font-display text-lg font-semibold tracking-[-0.04em]">
-          OPSIA<span className="text-amber-signal">.</span>
+        <a href="#top" className="flex items-center gap-2.5">
+          <img src={logoMark} alt="" width={30} height={23} className="h-[23px] w-auto" />
+          <span className="font-display text-lg font-semibold tracking-[-0.04em]">
+            OPSIA<span className="text-amber-signal">.</span>
+          </span>
         </a>
         <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
           {items.map((i) => (
@@ -333,9 +337,14 @@ function BBox({
   w: string;
   h: string;
   label: string;
-  tone: "safe" | "warn";
+  tone: "safe" | "warn" | "info";
 }) {
-  const color = tone === "safe" ? "oklch(0.78 0.15 155)" : "var(--amber-signal)";
+  const color =
+    tone === "safe"
+      ? "oklch(0.78 0.15 155)"
+      : tone === "warn"
+        ? "var(--amber-signal)"
+        : "rgba(255,255,255,0.75)";
   return (
     <div
       className="absolute"
@@ -392,6 +401,12 @@ function Hero({ onCta }: { onCta: () => void }) {
             OPSIA convierte las cámaras existentes de su operación en un sistema de monitoreo
             inteligente: cumplimiento de EPP, detección de maquinaria y alertas de proximidad en
             tiempo real. Sin hardware nuevo. Sin detener la operación.
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-6 max-w-2xl border-l-2 border-amber-signal pl-4 text-sm text-white/60">
+            Nacidos en la minería — la industria más exigente. Llevamos ese estándar de
+            seguridad a cada operación.
           </p>
         </Reveal>
         <Reveal delay={240}>
@@ -458,8 +473,8 @@ function CamCard({ className = "" }: { className?: string }) {
           <BBox top="6%" left="5%" w="36%" h="90%" label="CASCO ✓  CHALECO ✓" tone="safe" />
           {/* Right worker: helmet but no vest = warn */}
           <BBox top="14%" left="62%" w="33%" h="84%" label="SIN CHALECO ⚠" tone="warn" />
-          {/* Haul truck behind */}
-          <BBox top="2%" left="33%" w="66%" h="72%" label="VOLQUETE — 12 m" tone="warn" />
+          {/* Haul truck behind — informational, not an alert */}
+          <BBox top="2%" left="33%" w="66%" h="72%" label="VOLQUETE — 12 m" tone="info" />
         </div>
       </div>
     </div>
@@ -573,16 +588,14 @@ function Platform() {
   return (
     <section id="plataforma" className="bg-ink py-24 text-white md:py-32">
       <div className="container-opsia">
-        <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:items-end">
-          <Reveal>
-            <p className="text-eyebrow text-white/50">La plataforma</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="text-display-lg text-white">
-              Tres capas de inteligencia sobre las cámaras que ya operan.
-            </h2>
-          </Reveal>
-        </div>
+        <Reveal>
+          <p className="text-eyebrow text-white/50">La plataforma</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="text-display-lg mt-4 max-w-3xl text-white">
+            Tres capas de inteligencia sobre las cámaras que ya operan.
+          </h2>
+        </Reveal>
         <div className="mt-16 grid gap-px bg-white/10 md:grid-cols-3">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 120} className="bg-ink p-8 md:p-10">
@@ -716,16 +729,14 @@ function Solutions({ onCta }: { onCta: () => void }) {
   return (
     <section id="soluciones" className="bg-ink py-24 text-white md:py-32">
       <div className="container-opsia">
-        <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:items-end">
-          <Reveal>
-            <p className="text-eyebrow text-white/50">Soluciones por industria</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="text-display-lg text-white">
-              Un mismo motor. <span className="text-white/50">Reglas específicas para cada operación.</span>
-            </h2>
-          </Reveal>
-        </div>
+        <Reveal>
+          <p className="text-eyebrow text-white/50">Soluciones por industria</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="text-display-lg mt-4 max-w-4xl text-white">
+            Un mismo motor. <span className="text-white/50">Reglas específicas para cada operación.</span>
+          </h2>
+        </Reveal>
 
         <div className="mt-14 flex flex-wrap gap-2 border-b border-white/10 pb-4">
           {INDUSTRIES.map((i) => (
@@ -820,6 +831,13 @@ function Impact() {
         <p className="mt-8 text-xs text-white/40">
           *Resultados de programa piloto de referencia. Varían según operación, tipo de cámaras y cobertura.
         </p>
+        <Reveal delay={200}>
+          <p className="mt-10 max-w-2xl border-l-2 border-amber-signal pl-4 text-sm text-white/70">
+            <span className="font-medium text-white">Tecnología propia.</span> Modelos de detección
+            entrenados y validados sobre más de 48.000 anotaciones de entornos industriales reales
+            — no un wrapper de APIs de terceros.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -830,16 +848,14 @@ function DashboardShowcase() {
   return (
     <section id="recursos" className="bg-paper py-24 md:py-32">
       <div className="container-opsia">
-        <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:items-end">
-          <Reveal>
-            <p className="text-eyebrow text-ink/50">Producto en acción</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="text-display-lg text-ink">
-              El dashboard operacional. <span className="text-ink/50">Todo lo que ocurre, en una sola vista.</span>
-            </h2>
-          </Reveal>
-        </div>
+        <Reveal>
+          <p className="text-eyebrow text-ink/50">Producto en acción</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="text-display-lg mt-4 max-w-4xl text-ink">
+            El dashboard operacional. <span className="text-ink/50">Todo lo que ocurre, en una sola vista.</span>
+          </h2>
+        </Reveal>
 
         <Reveal delay={120}>
           <div className="mt-14 overflow-hidden border border-ink/15 bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.25)]">
@@ -920,12 +936,17 @@ function DashboardShowcase() {
                 <div className="mt-8">
                   <div className="flex items-baseline justify-between">
                     <p className="text-sm font-medium text-ink">Tendencia semanal · Contratista Andes SA</p>
-                    <p className="text-eyebrow text-ink/40">Cumplimiento EPP</p>
+                    <p className="font-display text-2xl font-medium text-ink">
+                      86% <span className="text-eyebrow align-middle text-ink/40">Cumplimiento EPP</span>
+                    </p>
                   </div>
                   <div className="mt-4 flex h-32 items-end gap-2">
                     {[62, 68, 71, 74, 73, 79, 86].map((v, i) => (
                       <div key={i} className="flex-1">
-                        <div className="w-full bg-ink" style={{ height: `${v}%` }} />
+                        <div
+                          className={"w-full " + (i === 6 ? "bg-amber-signal" : "bg-ink")}
+                          style={{ height: `${v}%` }}
+                        />
                         <p className="mt-1 text-center text-[10px] text-ink/40">
                           {["L", "M", "M", "J", "V", "S", "D"][i]}
                         </p>
@@ -956,7 +977,20 @@ function DashboardShowcase() {
                           a.s === "warn" ? "var(--amber-signal)" : "oklch(0.72 0.15 155)",
                       }}
                     >
-                      <div className="h-10 w-14 shrink-0 bg-ink/80" />
+                      <div className="relative h-10 w-14 shrink-0 overflow-hidden bg-ink/85">
+                        {/* mini detección: caja anclada dentro del thumbnail */}
+                        <span
+                          className="absolute border"
+                          style={{
+                            top: "18%",
+                            left: a.s === "warn" ? "30%" : "22%",
+                            width: "38%",
+                            height: "64%",
+                            borderColor:
+                              a.s === "warn" ? "var(--amber-signal)" : "oklch(0.72 0.15 155)",
+                          }}
+                        />
+                      </div>
                       <div className="min-w-0">
                         <p className="text-[11px] text-ink/50">
                           {a.t} · {a.z}
@@ -1141,8 +1175,7 @@ function FinalCTA({ onCta, onAudit }: { onCta: () => void; onAudit: () => void }
     <section className="bg-ink py-20 md:py-28">
       <div className="container-opsia">
         <div className="relative overflow-hidden bg-amber-signal p-10 md:p-16">
-          <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 border border-ink/20" />
-          <div className="pointer-events-none absolute -left-16 bottom-0 h-56 w-56 border border-ink/10" />
+          <div className="pointer-events-none absolute -right-12 -top-12 hidden h-36 w-36 border border-ink/15 lg:block" />
           <p className="text-eyebrow text-ink/70">Decisión</p>
           <h2 className="text-display-lg mt-4 max-w-3xl text-ink">
             La próxima infracción puede ser un incidente. O una alerta.
@@ -1172,6 +1205,7 @@ function FinalCTA({ onCta, onAudit }: { onCta: () => void; onAudit: () => void }
 
 // ---------- Footer ----------
 function Footer() {
+  const [subscribed, setSubscribed] = useState(false);
   const cols = [
     { t: "Soluciones", items: ["Minería", "Construcción", "Oil & Gas", "Puertos y flotas", "Farmacéutica", "Manufactura"] },
     { t: "Plataforma", items: ["Cumplimiento EPP", "Maquinaria y proximidad", "Evidencia y reportes", "Integraciones"] },
@@ -1183,9 +1217,17 @@ function Footer() {
       <div className="container-opsia">
         <div className="grid gap-12 border-t border-white/10 pt-12 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
-            <p className="font-display text-xl font-semibold tracking-[-0.04em] text-white">
-              OPSIA<span className="text-amber-signal">.</span>
-            </p>
+            <div className="flex items-center gap-3">
+              <img src={logoMark} alt="" width={36} height={27} className="h-[27px] w-auto" />
+              <div>
+                <p className="font-display text-xl font-semibold leading-none tracking-[-0.04em] text-white">
+                  OPSIA<span className="text-amber-signal">.</span>
+                </p>
+                <p className="mt-1 text-[10px] tracking-[0.28em] text-amber-signal/90">
+                  AI VISION FOR MINING
+                </p>
+              </div>
+            </div>
             <p className="mt-4 max-w-xs text-sm text-white/60">
               Visión artificial para operaciones seguras. Convertimos sus cámaras en un supervisor que no se distrae.
             </p>
@@ -1193,24 +1235,31 @@ function Footer() {
               className="mt-6"
               onSubmit={(e) => {
                 e.preventDefault();
+                setSubscribed(true);
                 (e.currentTarget as HTMLFormElement).reset();
               }}
             >
               <label htmlFor="newsletter" className="text-eyebrow text-white/50">
                 Novedades de seguridad industrial e IA · 1 email/mes
               </label>
-              <div className="mt-3 flex border border-white/15">
-                <input
-                  id="newsletter"
-                  type="email"
-                  required
-                  placeholder="usted@empresa.com"
-                  className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/30"
-                />
-                <button className="bg-amber-signal px-4 text-sm text-ink transition hover:brightness-95">
-                  Suscribir
-                </button>
-              </div>
+              {subscribed ? (
+                <p className="mt-3 border border-amber-signal/40 px-3 py-2.5 text-sm text-amber-signal">
+                  Listo — le llega el próximo número.
+                </p>
+              ) : (
+                <div className="mt-3 flex border border-white/15">
+                  <input
+                    id="newsletter"
+                    type="email"
+                    required
+                    placeholder="usted@empresa.com"
+                    className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/30"
+                  />
+                  <button className="bg-amber-signal px-4 text-sm text-ink transition hover:brightness-95">
+                    Suscribir
+                  </button>
+                </div>
+              )}
             </form>
           </div>
           {cols.map((c) => (

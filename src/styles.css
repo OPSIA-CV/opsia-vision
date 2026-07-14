@@ -72,7 +72,8 @@
   --paper: oklch(0.985 0.003 90);
   --ink: oklch(0.145 0 0);
   --ink-soft: oklch(0.25 0 0);
-  --amber-signal: oklch(0.76 0.155 70);
+  /* Dorado OPSIA — tomado del sol del isotipo, saturado para señalética */
+  --amber-signal: oklch(0.75 0.115 78);
   --background: var(--paper);
   --foreground: var(--ink);
   --card: oklch(1 0 0);
