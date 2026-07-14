@@ -17,16 +17,16 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Página no encontrada</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          La página que busca no existe o fue movida.
         </p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            Volver al inicio
           </Link>
         </div>
       </div>
@@ -45,10 +45,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          Esta página no cargó
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Algo falló de nuestro lado. Puede reintentar o volver al inicio.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -91,11 +91,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Cumplimiento de EPP, maquinaria y proximidad detectados en tiempo real, sobre las cámaras que ya tienen instaladas.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/og-image.jpg" },
+      { property: "og:url", content: "https://opsia-cv.netlify.app/" },
+      { property: "og:image", content: "https://opsia-cv.netlify.app/og-image.jpg" },
       { property: "og:locale", content: "es_AR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/og-image.jpg" },
+      { name: "twitter:image", content: "https://opsia-cv.netlify.app/og-image.jpg" },
       { name: "theme-color", content: "#0a0a0a" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "OPSIA",
+          description:
+            "Visión artificial para seguridad industrial: cumplimiento de EPP, maquinaria y proximidad en tiempo real sobre cámaras existentes.",
+          url: "https://opsia-cv.netlify.app/",
+          logo: "https://opsia-cv.netlify.app/apple-touch-icon.png",
+          email: "opsia.cv@gmail.com",
+          foundingLocation: { "@type": "Place", name: "San Juan, Argentina" },
+          areaServed: "Argentina",
+          knowsAbout: [
+            "visión artificial",
+            "seguridad industrial",
+            "detección de EPP",
+            "minería",
+          ],
+        }),
+      },
     ],
     links: [
       {
