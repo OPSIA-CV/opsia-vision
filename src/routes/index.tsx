@@ -4,6 +4,7 @@ import heroMine from "@/assets/hero-mine.jpg";
 import logoMark from "@/assets/logo-mark.png";
 import teamMaxi from "@/assets/team-maxi.jpg";
 import teamFelipe from "@/assets/team-felipe.jpg";
+import teamEmiliano from "@/assets/team-emiliano.jpg";
 import heroCam04 from "@/assets/hero-cam04.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
@@ -782,6 +783,7 @@ function Team() {
       role: "Co-fundador · Machine Learning & Datos",
       base: "San Juan",
       initials: "EL",
+      photo: teamEmiliano,
     },
   ];
   return (
