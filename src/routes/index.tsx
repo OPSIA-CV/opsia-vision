@@ -106,6 +106,8 @@ function Counter({
   );
 }
 
+const CONTACT_EMAIL = "opsia.cv@gmail.com";
+
 // ---------- Contact modal ----------
 function ContactModal({
   open,
@@ -164,9 +166,14 @@ function ContactModal({
                 <path d="M5 12l5 5L20 7" />
               </svg>
             </div>
-            <p className="mt-4 text-lg font-medium">Mensaje recibido.</p>
+            <p className="mt-4 text-lg font-medium">Su correo quedó listo para enviar.</p>
             <p className="mt-2 text-sm text-ink/60">
-              Un especialista de OPSIA se pondrá en contacto en menos de 24 h hábiles.
+              Se abrió su cliente de correo con el mensaje preparado — solo falta apretar
+              enviar. Si no se abrió, escríbanos a{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-ink underline">
+                {CONTACT_EMAIL}
+              </a>
+              . Respondemos en menos de 24 h hábiles.
             </p>
             <button onClick={onClose} className="btn-ghost-light mt-6">
               Cerrar
@@ -177,6 +184,15 @@ function ContactModal({
             className="grid gap-4 px-6 py-6"
             onSubmit={(e) => {
               e.preventDefault();
+              const fd = new FormData(e.currentTarget);
+              const subject = `[OPSIA] ${intent === "audit" ? "Auditoría piloto" : "Demo"} — ${fd.get("company")}`;
+              const body =
+                `Nombre: ${fd.get("name")}\n` +
+                `Empresa: ${fd.get("company")}\n` +
+                `Industria: ${fd.get("industry")}\n` +
+                `Email: ${fd.get("email")}\n\n` +
+                `${fd.get("message") ?? ""}`;
+              window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
               setSent(true);
             }}
           >
@@ -223,7 +239,12 @@ function ContactModal({
               </svg>
             </button>
             <p className="text-xs text-ink/50">
-              Al enviar acepta que OPSIA se ponga en contacto. No compartimos su información con terceros.
+              Al enviar se abre su cliente de correo con el mensaje listo. También puede
+              escribirnos directo a{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-ink underline">
+                {CONTACT_EMAIL}
+              </a>
+              . No compartimos su información con terceros.
             </p>
           </form>
         )}
@@ -1231,6 +1252,16 @@ function Footer() {
             <p className="mt-4 max-w-xs text-sm text-white/60">
               Visión artificial para operaciones seguras. Convertimos sus cámaras en un supervisor que no se distrae.
             </p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="mt-4 inline-flex items-center gap-2 text-sm text-white/80 transition hover:text-amber-signal"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="5" width="18" height="14" rx="1" />
+                <path d="M3 7l9 6 9-6" />
+              </svg>
+              {CONTACT_EMAIL}
+            </a>
             <form
               className="mt-6"
               onSubmit={(e) => {
@@ -1268,7 +1299,10 @@ function Footer() {
               <ul className="mt-4 space-y-2.5 text-sm text-white/70">
                 {c.items.map((i) => (
                   <li key={i}>
-                    <a href="#" className="transition hover:text-white">
+                    <a
+                      href={i === "Contacto" ? `mailto:${CONTACT_EMAIL}` : "#"}
+                      className="transition hover:text-white"
+                    >
                       {i}
                     </a>
                   </li>
