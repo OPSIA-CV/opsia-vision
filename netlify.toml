@@ -1,0 +1,10 @@
+# Configuración de deploy para Netlify.
+# La app es TanStack Start (Vite + Nitro): al detectar el entorno de Netlify,
+# Nitro genera los assets estáticos en `dist` y la función SSR automáticamente.
+
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
