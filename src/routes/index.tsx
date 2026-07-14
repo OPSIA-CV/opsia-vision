@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode, type ElementType } from "react";
 import heroMine from "@/assets/hero-mine.jpg";
+import heroCam04 from "@/assets/hero-cam04.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
 import indOilgas from "@/assets/ind-oilgas.jpg";
@@ -349,7 +350,7 @@ function BBox({
       }}
     >
       <span
-        className="absolute -top-6 left-0 whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium tracking-widest"
+        className="absolute left-0 top-0 whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium tracking-widest"
         style={{ background: color, color: "#0A0A0A" }}
       >
         {label}
@@ -371,12 +372,6 @@ function Hero({ onCta }: { onCta: () => void }) {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-ink" />
         <div className="scan-line" />
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 hidden md:block">
-        <BBox top="42%" left="14%" w="10%" h="22%" label="CASCO ✓  CHALECO ✓" tone="safe" />
-        <BBox top="55%" left="46%" w="13%" h="18%" label="SIN CHALECO ⚠" tone="warn" />
-        <BBox top="38%" left="70%" w="16%" h="26%" label="EXCAVADORA · 4.2 m" tone="warn" />
       </div>
 
       <div className="container-opsia relative flex min-h-[92vh] flex-col justify-end pb-20 pt-32 md:pb-28 md:pt-40">
@@ -412,15 +407,62 @@ function Hero({ onCta }: { onCta: () => void }) {
             </a>
           </div>
         </Reveal>
+
+        <CamCard className="mt-12 md:hidden" />
       </div>
+
+      <CamCard className="pointer-events-none absolute bottom-16 right-6 z-10 hidden w-[26rem] md:block lg:w-[30rem]" />
 
       <div className="pointer-events-none absolute bottom-4 left-6 text-[10px] tracking-[0.3em] text-white/40">
         CAM-07 · RTSP · 25 FPS
       </div>
-      <div className="pointer-events-none absolute bottom-4 right-6 text-[10px] tracking-[0.3em] text-white/40">
-        OPSIA-CORE v3.1
-      </div>
     </section>
+  );
+}
+
+function useClock() {
+  const [t, setT] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setT(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
+}
+
+function CamCard({ className = "" }: { className?: string }) {
+  const time = useClock();
+  return (
+    <div
+      className={`animate-fade-up overflow-hidden rounded-md border border-white/15 bg-black/80 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur ${className}`}
+    >
+      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2 text-white">
+        <div className="flex items-center gap-2">
+          <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-red-500" />
+          <span className="text-[10px] font-medium tracking-[0.2em] text-white/90">
+            CAM 04 — ZONA DE CARGA
+          </span>
+        </div>
+        <span className="font-mono text-[10px] tracking-widest text-white/60">{time}</span>
+      </div>
+      <div className="relative">
+        <img
+          src={heroCam04}
+          alt="Operarios y camión minero en la zona de carga"
+          className="block h-auto w-full"
+          width={1280}
+          height={896}
+        />
+        <div className="pointer-events-none absolute inset-0">
+          {/* Left worker: helmet + vest = safe */}
+          <BBox top="6%" left="5%" w="36%" h="90%" label="CASCO ✓  CHALECO ✓" tone="safe" />
+          {/* Right worker: helmet but no vest = warn */}
+          <BBox top="14%" left="62%" w="33%" h="84%" label="SIN CHALECO ⚠" tone="warn" />
+          {/* Haul truck behind */}
+          <BBox top="2%" left="33%" w="66%" h="72%" label="VOLQUETE — 12 m" tone="warn" />
+        </div>
+      </div>
+    </div>
   );
 }
 
