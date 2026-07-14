@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode, type ElementType } from "react";
 import heroMine from "@/assets/hero-mine.jpg";
 import logoMark from "@/assets/logo-mark.png";
+import teamMaxi from "@/assets/team-maxi.jpg";
+import teamFelipe from "@/assets/team-felipe.jpg";
 import heroCam04 from "@/assets/hero-cam04.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
@@ -754,18 +756,26 @@ function Solutions({ onCta }: { onCta: () => void }) {
 
 // ---------- Team ----------
 function Team() {
-  const founders = [
+  const founders: {
+    name: string;
+    role: string;
+    base: string;
+    initials: string;
+    photo?: string;
+  }[] = [
     {
       name: "Maximiliano Lombardia",
       role: "Co-fundador · Ingeniería & Producto",
       base: "Buenos Aires",
       initials: "ML",
+      photo: teamMaxi,
     },
     {
       name: "Felipe Bridge",
       role: "Co-fundador · Operaciones & Comercial",
       base: "San Juan",
       initials: "FB",
+      photo: teamFelipe,
     },
     {
       name: "Emiliano Lescuras",
@@ -795,9 +805,20 @@ function Team() {
         <div className="mt-14 grid gap-px bg-white/10 md:grid-cols-3">
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 100} className="bg-ink p-8">
-              <div className="grid h-16 w-16 place-items-center border border-amber-signal/40 font-display text-lg text-amber-signal">
-                {f.initials}
-              </div>
+              {f.photo ? (
+                <img
+                  src={f.photo}
+                  alt={`Retrato de ${f.name}`}
+                  width={800}
+                  height={800}
+                  loading="lazy"
+                  className="aspect-square w-full max-w-[220px] border border-white/10 object-cover"
+                />
+              ) : (
+                <div className="grid aspect-square w-full max-w-[220px] place-items-center border border-amber-signal/40 bg-white/[0.03] font-display text-4xl text-amber-signal">
+                  {f.initials}
+                </div>
+              )}
               <h3 className="mt-6 text-lg font-medium">{f.name}</h3>
               <p className="mt-1 text-sm text-white/60">{f.role}</p>
               <p className="mt-3 text-xs tracking-[0.2em] text-white/40">{f.base.toUpperCase()}</p>
