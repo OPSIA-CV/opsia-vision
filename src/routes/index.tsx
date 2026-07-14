@@ -350,7 +350,7 @@ function BBox({
       }}
     >
       <span
-        className="absolute -top-6 left-0 whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium tracking-widest"
+        className="absolute left-0 top-0 whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium tracking-widest"
         style={{ background: color, color: "#0A0A0A" }}
       >
         {label}
