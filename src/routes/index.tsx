@@ -6,9 +6,6 @@ import heroCam04 from "@/assets/hero-cam04.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
 import indOilgas from "@/assets/ind-oilgas.jpg";
-import indPorts from "@/assets/ind-ports.jpg";
-import indPharma from "@/assets/ind-pharma.jpg";
-import indManufacturing from "@/assets/ind-manufacturing.jpg";
 
 export const Route = createFileRoute("/")({
   component: OpsiaLanding,
@@ -345,50 +342,6 @@ function Navbar({ onCta }: { onCta: () => void }) {
 }
 
 // ---------- Hero ----------
-function BBox({
-  top,
-  left,
-  w,
-  h,
-  label,
-  tone,
-}: {
-  top: string;
-  left: string;
-  w: string;
-  h: string;
-  label: string;
-  tone: "safe" | "warn" | "info";
-}) {
-  const color =
-    tone === "safe"
-      ? "oklch(0.78 0.15 155)"
-      : tone === "warn"
-        ? "var(--amber-signal)"
-        : "rgba(255,255,255,0.75)";
-  return (
-    <div
-      className="absolute"
-      style={{
-        top,
-        left,
-        width: w,
-        height: h,
-        borderColor: color,
-        borderWidth: 1.5,
-        borderStyle: "solid",
-      }}
-    >
-      <span
-        className="absolute left-0 top-0 whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium tracking-widest"
-        style={{ background: color, color: "#0A0A0A" }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
-
 function Hero({ onCta }: { onCta: () => void }) {
   return (
     <section id="top" className="relative overflow-hidden bg-ink text-white">
@@ -476,40 +429,39 @@ function CamCard({ className = "" }: { className?: string }) {
         <div className="flex items-center gap-2">
           <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-red-500" />
           <span className="text-[10px] font-medium tracking-[0.2em] text-white/90">
-            CAM 04 — ZONA DE CARGA
+            DEMO — MODELO OPSIA · 24 FPS
           </span>
         </div>
         <span className="font-mono text-[10px] tracking-widest text-white/60">{time}</span>
       </div>
       <div className="relative">
-        <img
-          src={heroCam04}
-          alt="Operarios y camión minero en la zona de carga"
+        {/* Detecciones REALES: video procesado por el modelo OPSIA frame a frame */}
+        <video
+          src="/demo-deteccion.mp4"
+          poster={heroCam04}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="block h-auto w-full"
-          width={1280}
-          height={896}
+          aria-label="Demo del modelo OPSIA detectando personas, cascos y chalecos en tiempo real"
         />
-        <div className="pointer-events-none absolute inset-0">
-          {/* Left worker: helmet + vest = safe */}
-          <BBox top="6%" left="5%" w="36%" h="90%" label="CASCO ✓  CHALECO ✓" tone="safe" />
-          {/* Right worker: helmet but no vest = warn */}
-          <BBox top="14%" left="62%" w="33%" h="84%" label="SIN CHALECO ⚠" tone="warn" />
-          {/* Haul truck behind — informational, not an alert */}
-          <BBox top="2%" left="33%" w="66%" h="72%" label="VOLQUETE — 12 m" tone="info" />
-        </div>
       </div>
+      <p className="border-t border-white/10 px-3 py-1.5 text-[9px] tracking-[0.14em] text-white/45">
+        DETECCIONES REALES DEL MODELO OPSIA · VIDEO DE REFERENCIA
+      </p>
     </div>
   );
 }
 
 // ---------- Trust bar ----------
 function TrustBar() {
-  const industries = ["Minería", "Construcción", "Oil & Gas", "Puertos y flotas", "Farmacéutica", "Manufactura"];
+  const industries = ["Minería", "Construcción", "Oil & Gas"];
   return (
     <section className="border-y border-white/10 bg-ink py-10 text-white">
-      <div className="container-opsia">
+      <div className="container-opsia flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <p className="text-eyebrow text-white/50">Diseñado para las industrias más exigentes</p>
-        <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 text-sm text-white/70 sm:grid-cols-3 md:grid-cols-6">
+        <div className="flex flex-wrap gap-x-10 gap-y-4 text-sm text-white/70">
           {industries.map((i) => (
             <div key={i} className="flex items-center gap-2 border-l border-white/10 pl-3">
               <span className="h-1 w-1 rounded-full bg-amber-signal" />
@@ -540,7 +492,7 @@ function Problem() {
           {[
             { n: 60, s: "%", t: "de los incidentes graves involucran EPP ausente o incorrecto.", src: "Referencias OSHA / literatura HSE" },
             { n: 8, s: "s", t: "es el tiempo medio en que una infracción de proximidad se vuelve incidente.", src: "Estudios de seguridad minera" },
-            { n: 40, s: "+", t: "cámaras activas por sitio promedio, sin cobertura de supervisión continua.", src: "Encuestas operacionales" },
+            { n: 40, s: "+", t: "cámaras por sitio es la norma — y la atención humana sostenida sobre monitores cae a los pocos minutos.", src: "Límite operativo conocido en videovigilancia multi-cámara" },
           ].map((k, i) => (
             <Reveal key={k.t} delay={100 + i * 60}>
               <div>
@@ -715,33 +667,6 @@ const INDUSTRIES = [
       "Vigilancia de perímetro de instalaciones",
     ],
   },
-  {
-    key: "puertos", name: "Puertos y flotas", img: indPorts,
-    bullets: [
-      "EPP en cubierta y muelle",
-      "Operaciones de carga y descarga seguras",
-      "Hombre al agua y zonas de amarre",
-      "Contenedores y maquinaria portuaria",
-    ],
-  },
-  {
-    key: "pharma", name: "Farmacéutica", img: indPharma,
-    bullets: [
-      "Indumentaria estéril completa (cofia, barbijo, guantes, mameluco)",
-      "Protocolo de ingreso a salas limpias",
-      "Trazabilidad de cumplimiento GMP",
-      "Segregación de zonas de producción",
-    ],
-  },
-  {
-    key: "manufactura", name: "Manufactura", img: indManufacturing,
-    bullets: [
-      "EPP en línea",
-      "Zonas de robots y prensas",
-      "Bloqueo y etiquetado visual (LOTO)",
-      "Ergonomía y pasillos despejados",
-    ],
-  },
 ];
 
 function Solutions({ onCta }: { onCta: () => void }) {
@@ -813,6 +738,72 @@ function Solutions({ onCta }: { onCta: () => void }) {
             </button>
           </div>
         </div>
+
+        <p className="mt-12 border-t border-white/10 pt-6 text-sm text-white/50">
+          ¿Opera en otra industria pesada? El motor de detección es el mismo — las reglas se
+          adaptan a su operación.{" "}
+          <button onClick={onCta} className="text-amber-signal underline-offset-4 hover:underline">
+            Conversemos
+          </button>
+          .
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ---------- Team ----------
+function Team() {
+  const founders = [
+    {
+      name: "Maximiliano Lombardia",
+      role: "Co-fundador · Ingeniería & Producto",
+      base: "Buenos Aires",
+      initials: "ML",
+    },
+    {
+      name: "Felipe Bridge",
+      role: "Co-fundador · Operaciones & Comercial",
+      base: "San Juan",
+      initials: "FB",
+    },
+    {
+      name: "Emiliano Lescuras",
+      role: "Co-fundador · Machine Learning & Datos",
+      base: "San Juan",
+      initials: "EL",
+    },
+  ];
+  return (
+    <section className="bg-ink py-24 text-white md:py-32">
+      <div className="container-opsia">
+        <Reveal>
+          <p className="text-eyebrow text-white/50">Quiénes somos</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="text-display-lg mt-4 max-w-3xl text-white">
+            Un equipo de IA con los pies en la tierra minera.
+          </h2>
+        </Reveal>
+        <Reveal delay={140}>
+          <p className="mt-6 max-w-2xl text-white/60">
+            OPSIA nace en San Juan — corazón de la minería argentina — con formación en
+            inteligencia artificial y ciencia de datos, y una convicción: la seguridad de un
+            operario no puede depender de cuántos monitores alcanza a mirar un supervisor.
+          </p>
+        </Reveal>
+        <div className="mt-14 grid gap-px bg-white/10 md:grid-cols-3">
+          {founders.map((f, i) => (
+            <Reveal key={f.name} delay={i * 100} className="bg-ink p-8">
+              <div className="grid h-16 w-16 place-items-center border border-amber-signal/40 font-display text-lg text-amber-signal">
+                {f.initials}
+              </div>
+              <h3 className="mt-6 text-lg font-medium">{f.name}</h3>
+              <p className="mt-1 text-sm text-white/60">{f.role}</p>
+              <p className="mt-3 text-xs tracking-[0.2em] text-white/40">{f.base.toUpperCase()}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -821,8 +812,8 @@ function Solutions({ onCta }: { onCta: () => void }) {
 // ---------- Impact metrics ----------
 function Impact() {
   const metrics = [
-    { v: 72, s: "%", label: "reducción de infracciones de EPP en 90 días", prefix: "−" },
     { v: 2, s: " s", label: "de cámara a alerta", prefix: "<" },
+    { v: 26, s: "", label: "clases detectadas: EPP, personas y maquinaria pesada", prefix: "" },
     { v: 24, s: "/7", label: "sin fatiga de supervisión", prefix: "" },
     { v: 0, s: "", label: "hardware nuevo requerido", prefix: "" },
   ];
@@ -849,9 +840,6 @@ function Impact() {
             </Reveal>
           ))}
         </div>
-        <p className="mt-8 text-xs text-white/40">
-          *Resultados de programa piloto de referencia. Varían según operación, tipo de cámaras y cobertura.
-        </p>
         <Reveal delay={200}>
           <p className="mt-10 max-w-2xl border-l-2 border-amber-signal pl-4 text-sm text-white/70">
             <span className="font-medium text-white">Tecnología propia.</span> Modelos de detección
@@ -1067,7 +1055,18 @@ function ServiceModel({ onCta }: { onCta: () => void }) {
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <Reveal delay={120}>
+          <div className="mt-10 flex flex-col gap-3 border-l-2 border-amber-signal pl-4 text-sm text-ink/70 md:flex-row md:items-center md:gap-8">
+            <span className="font-medium text-ink">Cómo empezamos:</span>
+            <span>① Llamada de 30 minutos</span>
+            <span className="hidden text-ink/30 md:inline">→</span>
+            <span>② Auditoría piloto sobre video de SU operación</span>
+            <span className="hidden text-ink/30 md:inline">→</span>
+            <span>③ Propuesta con números reales de su sitio</span>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {tiers.map((t, i) => (
             <Reveal key={t.name} delay={i * 100}>
               <div
@@ -1228,7 +1227,7 @@ function FinalCTA({ onCta, onAudit }: { onCta: () => void; onAudit: () => void }
 function Footer() {
   const [subscribed, setSubscribed] = useState(false);
   const cols = [
-    { t: "Soluciones", items: ["Minería", "Construcción", "Oil & Gas", "Puertos y flotas", "Farmacéutica", "Manufactura"] },
+    { t: "Soluciones", items: ["Minería", "Construcción", "Oil & Gas", "Otras industrias"] },
     { t: "Plataforma", items: ["Cumplimiento EPP", "Maquinaria y proximidad", "Evidencia y reportes", "Integraciones"] },
     { t: "Empresa", items: ["Sobre OPSIA", "Investigación", "Recursos", "Contacto"] },
     { t: "Legal", items: ["Privacidad", "Términos", "Seguridad de datos", "GDPR / Ley 25.326"] },
@@ -1262,6 +1261,9 @@ function Footer() {
               </svg>
               {CONTACT_EMAIL}
             </a>
+            <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/40">
+              Cobertura: San Juan · Mendoza · Salta · Jujuy · Neuquén · Río Negro · Buenos Aires
+            </p>
             <form
               className="mt-6"
               onSubmit={(e) => {
@@ -1313,7 +1315,7 @@ function Footer() {
         </div>
         <div className="mt-16 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row">
           <p>© 2026 OPSIA — Visión artificial para operaciones seguras.</p>
-          <p>Buenos Aires · Santiago · Lima</p>
+          <p>San Juan · Buenos Aires · Argentina</p>
         </div>
       </div>
     </footer>
@@ -1338,6 +1340,7 @@ function OpsiaLanding() {
         <Impact />
         <DashboardShowcase />
         <ServiceModel onCta={openDemo} />
+        <Team />
         <FAQ />
         <FinalCTA onCta={openDemo} onAudit={openAudit} />
       </main>
