@@ -6,6 +6,8 @@ import teamMaxi from "@/assets/team-maxi.jpg";
 import teamFelipe from "@/assets/team-felipe.jpg";
 import teamEmiliano from "@/assets/team-emiliano.jpg";
 import heroCam03 from "@/assets/hero-cam03.jpg";
+// @ts-expect-error — Vite trata el mp4 como asset estático (URL con hash)
+import demoVideo from "@/assets/demo-deteccion.mp4";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
 import indOilgas from "@/assets/ind-oilgas.jpg";
@@ -440,7 +442,7 @@ function CamCard({ className = "" }: { className?: string }) {
       <div className="relative">
         {/* Detecciones REALES: video procesado por el modelo OPSIA frame a frame */}
         <video
-          src="/demo-deteccion.mp4"
+          src={demoVideo}
           poster={heroCam03}
           autoPlay
           muted

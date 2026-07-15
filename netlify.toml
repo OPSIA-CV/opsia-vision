@@ -17,7 +17,5 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-[[headers]]
-  for = "/demo-deteccion.mp4"
-  [headers.values]
-    Cache-Control = "public, max-age=604800"
+# El video de demo vive en /assets con hash de contenido (cache-busting
+# automático de Vite) — no necesita reglas de caché manuales.
