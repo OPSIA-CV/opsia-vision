@@ -5,7 +5,7 @@ import logoMark from "@/assets/logo-mark.png";
 import teamMaxi from "@/assets/team-maxi.jpg";
 import teamFelipe from "@/assets/team-felipe.jpg";
 import teamEmiliano from "@/assets/team-emiliano.jpg";
-import heroCam04 from "@/assets/hero-cam04.jpg";
+import heroCam03 from "@/assets/hero-cam03.jpg";
 import indMining from "@/assets/ind-mining.jpg";
 import indConstruction from "@/assets/ind-construction.jpg";
 import indOilgas from "@/assets/ind-oilgas.jpg";
@@ -441,13 +441,13 @@ function CamCard({ className = "" }: { className?: string }) {
         {/* Detecciones REALES: video procesado por el modelo OPSIA frame a frame */}
         <video
           src="/demo-deteccion.mp4"
-          poster={heroCam04}
+          poster={heroCam03}
           autoPlay
           muted
           loop
           playsInline
           className="block h-auto w-full"
-          aria-label="Demo del modelo OPSIA detectando personas, cascos y chalecos en tiempo real"
+          aria-label="Demo del modelo OPSIA detectando personas, EPP y vehículos en una mina a cielo abierto"
         />
       </div>
       <p className="border-t border-white/10 px-3 py-1.5 text-[9px] tracking-[0.14em] text-white/45">
