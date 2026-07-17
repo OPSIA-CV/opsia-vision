@@ -434,7 +434,7 @@ function CamCard({ className = "" }: { className?: string }) {
         <div className="flex items-center gap-2">
           <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-red-500" />
           <span className="text-[10px] font-medium tracking-[0.2em] text-white/90">
-            DEMO — MODELO OPSIA · 24 FPS
+            VISTA DE OPERADOR — SIMULACIÓN
           </span>
         </div>
         <span className="font-mono text-[10px] tracking-widest text-white/60">{time}</span>
@@ -449,11 +449,11 @@ function CamCard({ className = "" }: { className?: string }) {
           loop
           playsInline
           className="block h-auto w-full"
-          aria-label="Demo del modelo OPSIA detectando personas, EPP y vehículos en una mina a cielo abierto"
+          aria-label="Simulación ilustrativa de la vista de operador del sistema OPSIA"
         />
       </div>
       <p className="border-t border-white/10 px-3 py-1.5 text-[9px] tracking-[0.14em] text-white/45">
-        DETECCIONES REALES DEL MODELO OPSIA · VIDEO DE REFERENCIA
+        SIMULACIÓN ILUSTRATIVA DE LA INTERFAZ · DEMO CON DETECCIONES REALES DISPONIBLE EN REUNIÓN
       </p>
     </div>
   );
